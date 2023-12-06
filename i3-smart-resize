@@ -21,21 +21,23 @@ if len(sys.argv) == 3:
 else:
     inc = DEFAULT_INCREMENT
 
+# Bugfix, add gaps to calculation
+GAPS = 10
 def is_at_top_edge(focused):
     workspace = focused.workspace()
-    return focused.rect.y - focused.deco_rect.height == workspace.rect.y
+    return focused.rect.y - focused.deco_rect.height - GAPS <= workspace.rect.y
 
 def is_at_bottom_edge(focused):
     workspace = focused.workspace()
-    return focused.rect.y + focused.rect.height == workspace.rect.y + workspace.rect.height
+    return focused.rect.y + focused.rect.height + GAPS >= workspace.rect.y + workspace.rect.height
 
 def is_at_left_edge(focused):
     workspace = focused.workspace()
-    return focused.rect.x == workspace.rect.x
+    return focused.rect.x - GAPS <= workspace.rect.x
 
 def is_at_right_edge(focused):
     workspace = focused.workspace()
-    return focused.rect.x + focused.rect.width == workspace.rect.x + workspace.rect.width
+    return focused.rect.x + focused.rect.width + GAPS >= workspace.rect.x + workspace.rect.width
 
 
 i3 = i3ipc.Connection()
